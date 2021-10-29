@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Amirr\\Documents\\Projects\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem.csproj": {}
+    "C:\\Users\\Arthuria\\Documents\\GitHub\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Amirr\\Documents\\Projects\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem.csproj": {
+    "C:\\Users\\Arthuria\\Documents\\GitHub\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Amirr\\Documents\\Projects\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem.csproj",
+        "projectUniqueName": "C:\\Users\\Arthuria\\Documents\\GitHub\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem.csproj",
         "projectName": "MRTOnlineTicketingSystem",
-        "projectPath": "C:\\Users\\Amirr\\Documents\\Projects\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem.csproj",
-        "packagesPath": "C:\\Users\\Amirr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Amirr\\Documents\\Projects\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem\\obj\\",
+        "projectPath": "C:\\Users\\Arthuria\\Documents\\GitHub\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem.csproj",
+        "packagesPath": "C:\\Users\\Arthuria\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Arthuria\\Documents\\GitHub\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Amirr\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Arthuria\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -43,6 +39,12 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "jQuery.UI.Combined": {
+              "target": "Package",
+              "version": "[1.12.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -61,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

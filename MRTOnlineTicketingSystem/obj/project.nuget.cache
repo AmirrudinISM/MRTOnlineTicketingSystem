@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ZSnGlE1lsb07GFP8IvJ0Mv26U+D831nguT2xrl+F/xY1CiojCyhhDiCKi3Fl+8ltIe+3nE2gKUduM+9rsbMwJg==",
+  "dgSpecHash": "omVlvVS4obiIvf99XbNBs8jDJzD0Py49mkC2fToC1xsHVSoud8mCtLkRe7sCPO5fl6ToSBKKS3KBSpqHlmyOUA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Amirr\\Documents\\Projects\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Arthuria\\Documents\\GitHub\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem\\MRTOnlineTicketingSystem.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Arthuria\\.nuget\\packages\\jquery\\1.12.4\\jquery.1.12.4.nupkg.sha512",
+    "C:\\Users\\Arthuria\\.nuget\\packages\\jquery.ui.combined\\1.12.1\\jquery.ui.combined.1.12.1.nupkg.sha512"
+  ],
   "logs": []
 }

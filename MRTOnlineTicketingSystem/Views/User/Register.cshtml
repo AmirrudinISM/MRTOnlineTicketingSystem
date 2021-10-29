@@ -1,0 +1,68 @@
+﻿@model MRTOnlineTicketingSystem.Models.User
+<head>
+    <title>Register</title>
+</head>
+<body>
+
+    <h1> Create Account</h1>
+
+    @using (Html.BeginForm())
+    {
+        <div class=" row">
+            <p class="col-md-6">
+                <label> @Html.DisplayNameFor(x => x.Name)</label>
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+            </p>
+        </div>
+
+        <div class=" row">
+            <p class="col-md-6">
+                <label> @Html.DisplayNameFor(x => x.DateOfBirth)</label>
+                @Html.TextBoxFor(x => x.DateOfBirth, new { @class = "datepicker  form-control" })
+                @Html.ValidationMessageFor(x => x.DateOfBirth, "", new { @class = "text-danger" })
+            </p>
+        </div>
+
+        <div class=" row">
+            <p class="col-md-6">
+                <label> @Html.DisplayNameFor(x => x.Email)</label>
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+            </p>
+        </div>
+
+        <div class=" row">
+            <p class="col-md-6">
+                <label> @Html.DisplayNameFor(x => x.Password)</label>
+                @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
+            </p>
+        </div>
+
+        <div class=" row">
+            <p class="col-md-6">
+                <label> @Html.DisplayNameFor(x => x.RePassword)</label>
+                @Html.PasswordFor(x => x.RePassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.RePassword, "", new { @class = "text-danger" })
+            </p>
+        </div>
+
+        <p> <input type="submit" value="Register" class="btn-success btn-md" /></p>
+    }
+</body>
+@section Scripts {
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+ 
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+
+        $(".datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+        });
+    </script>
+
+} 
