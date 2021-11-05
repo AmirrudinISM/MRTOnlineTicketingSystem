@@ -8,6 +8,7 @@ namespace MRTOnlineTicketingSystem.Models
 {
     public class User
     {
+        public int Uid { get; set; }
         [Display(Name = "Name")]
         [Required(ErrorMessage = "Please enter your Name")]
         public string Name { get; set; }
@@ -29,5 +30,6 @@ namespace MRTOnlineTicketingSystem.Models
         [Compare("Password")]
         [Required(ErrorMessage = "Please enter your password")]
         public string RePassword { get; set; }
+        public int Usertype { get; set; }
     }
 }
