@@ -204,7 +204,7 @@ namespace MRTOnlineTicketingSystem.Controllers
             else
             {
 
-                Console.WriteLine("babi");
+         
                 mrt.currentLocationIndex = -1;
                 mrt.destinationLocationIndex = -1;
                 mrt.TicketIndex = -1;
@@ -213,7 +213,7 @@ namespace MRTOnlineTicketingSystem.Controllers
             }
        
         }
-
+       
         [HttpPost]
         public IActionResult TicketForm(MRTTicket mrt)
         {
