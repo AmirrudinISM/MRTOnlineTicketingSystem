@@ -63,12 +63,14 @@ namespace MRTOnlineTicketingSystem.Controllers
                 }
 
                 var emailResult = emailList.Where(x => x.Email == user.Email).FirstOrDefault();
-                ViewBag.UserID = emailResult.Uid;
+               
 
 
                 if (emailResult != null)
                 {
                     Console.WriteLine("email exist");
+                    ViewBag.UserExist = true;
+                    return View(user);
                 }
                 else
                 {
@@ -81,6 +83,7 @@ namespace MRTOnlineTicketingSystem.Controllers
                     createUser.Parameters.AddWithValue("@uemail", user.Email);
                     createUser.Parameters.AddWithValue("@upass", user.Password);
                     createUser.Parameters.AddWithValue("@utype", "2");
+                    createUser.Parameters.AddWithValue("@icnumber", user.ICNumber);
 
                     try
                     {
@@ -95,6 +98,8 @@ namespace MRTOnlineTicketingSystem.Controllers
                     {
                         conn.Close();
                     }
+
+                   //try dapatkan return login id
                     return View("Login");
                 }
 
@@ -103,9 +108,6 @@ namespace MRTOnlineTicketingSystem.Controllers
             {
                 return View(user);
             }
-
-            return View(user);
-
         }
 
 
@@ -157,10 +159,13 @@ namespace MRTOnlineTicketingSystem.Controllers
                 if (UserResult.Password == user.Password)
                 {
                     HttpContext.Session.SetInt32("UserID", UserResult.Uid);
-                    if (HttpContext.Session.GetInt32("error")==1)
+
+                    //check either before this user dari ticket form or dari login
+                    if (HttpContext.Session.GetString("redirect") == "true")
                     {
+                        //kalau dari ticket form dia akan redirect ke ticket form semula untuk continue booking process
                         HttpContext.Session.Remove("error");
-                        return View("TicketForm");
+                        return View("SummaryTicket");
                     }
                     else
                     {
@@ -188,17 +193,12 @@ namespace MRTOnlineTicketingSystem.Controllers
         public IActionResult TicketForm()
         {
             MRTTicket mrt = new MRTTicket();
-            mrt.rdirect = false;
-
-
+          
             if (HttpContext.Session.GetInt32("UserID") == null)
             {
-             
-                ViewBag.error = 3;
-                mrt.rdirect = true;
-                Console.WriteLine("wehh"+ mrt.rdirect);
+     
                 TempData["error1"] = 1;
-                HttpContext.Session.SetInt32("error", 1);
+                HttpContext.Session.SetString("redirect", "true"); //set session utk bgthu yang user redirect ke login
                 return Redirect("Login");
             }
             else
@@ -217,21 +217,9 @@ namespace MRTOnlineTicketingSystem.Controllers
         [HttpPost]
         public IActionResult TicketForm(MRTTicket mrt)
         {
-            Console.WriteLine("val" + mrt.rdirect);
-            if (mrt.rdirect)
-            {
-                mrt.currentLocationIndex = -1;
-                mrt.destinationLocationIndex = -1;
-                mrt.TicketIndex = -1;
-                mrt.rdirect = false;
-                return View(mrt);
-            }
-            else
-            {
-                return View("ConfirmationTicket", mrt);
-            }
-            
-  
+
+                return View("SummaryTicket", mrt);
+
         }
 
 

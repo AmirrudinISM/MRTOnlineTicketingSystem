@@ -8,12 +8,25 @@
 
     @using (Html.BeginForm())
     {
-
+        @if (ViewBag.UserExist==true)
+        {
+            <div class="alert alert-danger">
+                <p>User with this email already exist!</p>
+            </div>
+        }
         <div class=" row">
             <p class="col-md-6">
                 <label> @Html.DisplayNameFor(x => x.Name)</label>
                 @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
                 @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+            </p>
+        </div>
+
+        <div class=" row">
+            <p class="col-md-6">
+                <label> @Html.DisplayNameFor(x => x.ICNumber)</label>
+                @Html.TextBoxFor(x => x.ICNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.ICNumber, "", new { @class = "text-danger" })
             </p>
         </div>
 

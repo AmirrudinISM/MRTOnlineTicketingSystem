@@ -35,7 +35,6 @@ C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSy
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
-C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\User\ConfirmationTicket.cshtml.g.cs
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\User\Login.cshtml.g.cs
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\User\Register.cshtml.g.cs
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\User\TicketForm.cshtml.g.cs
@@ -51,3 +50,4 @@ C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSy
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\MRTOnlineTicketingSystem.pdb
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\MRTOnlineTicketingSystem.genruntimeconfig.cache
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\MRTOnlineTicketingSystem.csproj.AssemblyReference.cache
+C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\User\SummaryTicket.cshtml.g.cs

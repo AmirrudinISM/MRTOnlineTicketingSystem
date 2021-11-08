@@ -10,13 +10,14 @@ namespace MRTOnlineTicketingSystem.Models
     public class User
     {
         public int Uid { get; set; }
-        public const string SessionKeyid = "userID";
-        
- 
-
+   
         [Display(Name = "Name")]
         [Required(ErrorMessage = "Please enter your Name")]
         public string Name { get; set; }
+
+        [Display(Name = "IC Number")]
+        [Required(ErrorMessage = "Please enter your IC Number")]
+        public string ICNumber { get; set; }
 
         [Display(Name = "Date of birth")]
         [Required(ErrorMessage = "Please select your Date of birth")]

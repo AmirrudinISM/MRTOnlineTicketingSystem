@@ -7,10 +7,7 @@ using System.ComponentModel.DataAnnotations;
 namespace MRTOnlineTicketingSystem.Models {
     public class MRTTicket {
 
-        double TotalAdult, TotalSenior, TotalDisable, TotalStudent;
-        
-        public bool rdirect { get; set; }
-        
+        double TotalAdult, TotalSenior, TotalDisable, TotalStudent;   
         
         [Display(Name ="Date & Time")]
         public DateTime PurchaseDateTime
