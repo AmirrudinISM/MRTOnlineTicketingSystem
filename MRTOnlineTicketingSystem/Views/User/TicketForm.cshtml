@@ -1,0 +1,72 @@
+﻿@model MRTOnlineTicketingSystem.Models.MRTTicket;
+
+@using Microsoft.AspNetCore.Http;
+<head>
+    <title>Ticket</title>
+</head>
+<body>
+
+    <h1>Book ticket for your journey now</h1>
+
+    @using (Html.BeginForm())
+    {
+
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.currentLocationIndex) </label>
+            @Html.DropDownListFor(x => x.currentLocationIndex, new SelectList(Model.DictStation, "Key", "Value"), "Select Station", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.currentLocationIndex, "", new { @class = "text-danger" })
+
+        </p>
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.destinationLocationIndex) </label>
+            @Html.DropDownListFor(x => x.destinationLocationIndex, new SelectList(Model.DictStation, "Key", "Value"), "Select Station", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.destinationLocationIndex, "", new { @class = "text-danger" })
+
+        </p>
+
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.TicketIndex) </label>
+            @Html.DropDownListFor(x => x.TicketIndex, new SelectList(Model.DictTicketType, "Key", "Value"), "Select Ticket Type", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.TicketIndex, "", new { @class = "text-danger" })
+
+        </p>
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.Adult) </label>
+            @Html.TextBoxFor(x => x.Adult, new { @type = "number", @class = "form-control", @min = "0", @step = "1" })
+
+        </p>
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.Student) </label>
+            @Html.TextBoxFor(x => x.Student, new { @type = "number", @class = "form-control", @min = "0", @step = "1" })
+
+        </p>
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.SeniorCitizen) </label>
+            @Html.TextBoxFor(x => x.SeniorCitizen, new { @type = "number", @class = "form-control", @min = "0", @step = "1" })
+
+        </p>
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.Disable) </label>
+            @Html.TextBoxFor(x => x.Disable, new { @type = "number", @class = "form-control", @min = "0", @step = "1" })
+
+        </p>
+
+
+        <p> <input type="submit" value="Buy" class="btn-success btn-md" /></p>
+    }
+</body>
+@section Scripts {
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+
+        $(".datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+        });
+    </script>
+
+} 

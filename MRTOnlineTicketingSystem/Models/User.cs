@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace MRTOnlineTicketingSystem.Models
 {
     public class User
     {
         public int Uid { get; set; }
+        public const string SessionKeyid = "userID";
+        
+ 
+
         [Display(Name = "Name")]
         [Required(ErrorMessage = "Please enter your Name")]
         public string Name { get; set; }
@@ -31,5 +36,7 @@ namespace MRTOnlineTicketingSystem.Models
         [Required(ErrorMessage = "Please enter your password")]
         public string RePassword { get; set; }
         public int Usertype { get; set; }
+
+     
     }
 }

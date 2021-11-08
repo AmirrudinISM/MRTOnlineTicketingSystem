@@ -7,6 +7,8 @@ using MRTOnlineTicketingSystem.Models;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Http;
+using System.Web;
 
 
 namespace MRTOnlineTicketingSystem.Controllers
@@ -27,10 +29,11 @@ namespace MRTOnlineTicketingSystem.Controllers
         public IActionResult Register(User user)
         {
 
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 IList<User> emailList = new List<User>();
                 SqlConnection conn = new SqlConnection(configuration.GetConnectionString("MRTConn"));
-                string findUserSQL = @"SELECT UEmail FROM MrtUser";
+                string findUserSQL = @"SELECT * FROM MrtUser";
                 SqlCommand runFindUser = new SqlCommand(findUserSQL, conn);
 
                 try
@@ -41,7 +44,11 @@ namespace MRTOnlineTicketingSystem.Controllers
                     {
                         emailList.Add(new User()
                         {
-                            Email = reader.GetString(0)
+                            Uid = reader.GetInt32(0),
+                            Name = reader.GetString(1),
+                            Email = reader.GetString(3),
+                            Password = reader.GetString(4),
+                            Usertype = reader.GetInt32(5)
                         });
                     }
                 }
@@ -56,6 +63,8 @@ namespace MRTOnlineTicketingSystem.Controllers
                 }
 
                 var emailResult = emailList.Where(x => x.Email == user.Email).FirstOrDefault();
+                ViewBag.UserID = emailResult.Uid;
+
 
                 if (emailResult != null)
                 {
@@ -80,7 +89,7 @@ namespace MRTOnlineTicketingSystem.Controllers
                     }
                     catch
                     {
-                      
+
                     }
                     finally
                     {
@@ -109,65 +118,125 @@ namespace MRTOnlineTicketingSystem.Controllers
         [HttpPost]
         public IActionResult Login(User user)
         {
-            if (ModelState.IsValid) {
-                IList<User> UserList = new List<User>();
-                SqlConnection conn = new SqlConnection(configuration.GetConnectionString("MRTConn"));
-                string findUserSQL = @"SELECT * FROM MrtUser";
-                SqlCommand runFindUser = new SqlCommand(findUserSQL, conn);
-
-                try
+            Console.WriteLine("masuk:");
+            IList<User> UserList = new List<User>();
+            SqlConnection conn = new SqlConnection(configuration.GetConnectionString("MRTConn"));
+            string findUserSQL = @"SELECT * FROM MrtUser";
+            SqlCommand runFindUser = new SqlCommand(findUserSQL, conn);
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = runFindUser.ExecuteReader();
+                while (reader.Read())
                 {
-                    conn.Open();
-                    SqlDataReader reader = runFindUser.ExecuteReader();
-                    while (reader.Read())
+                    UserList.Add(new User()
                     {
-                        UserList.Add(new User()
-                        {
-                            Uid = reader.GetInt32(0),
-                            Name= reader.GetString(1),
-                            Email= reader.GetString(3),
-                            Password= reader.GetString(4),
-                            Usertype=reader.GetInt32(5)
+                        Uid = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Email = reader.GetString(3),
+                        Password = reader.GetString(4),
+                        Usertype = reader.GetInt32(5)
 
-                        });
-                    }
+                    });
                 }
-                catch
-                {
-                    
-                }
-                finally
-                {
-                    conn.Close();
-                }
+            }
+            catch
+            {
 
-                var UserResult = UserList.Where(x => x.Email == user.Email).FirstOrDefault();
-              
+            }
+            finally
+            {
+                conn.Close();
+            }
 
-                if (UserResult != null)
+            var UserResult = UserList.Where(x => x.Email == user.Email).FirstOrDefault();
+
+
+            if (UserResult != null)
+            {
+                if (UserResult.Password == user.Password)
                 {
-                    if(UserResult.Password== user.Password)
+                    HttpContext.Session.SetInt32("UserID", UserResult.Uid);
+                    if (HttpContext.Session.GetInt32("error")==1)
                     {
-                        return View("UserDashboard");
+                        HttpContext.Session.Remove("error");
+                        return View("TicketForm");
                     }
                     else
                     {
-                        //return login page with error wrong password
+                        return View("UserDashboard");
                     }
+                  
                 }
                 else
                 {
-                    //return to login with error email not exist
+                    ViewBag.error = 1;
+
+                    return View("Login");
+                    //return login page with error wrong password
                 }
             }
             else
             {
-                return View(user);
+                ViewBag.error = 2;
+                return View("Login");
+                //return to login with error email not exist
+
             }
-           
-            return View(user);
+        }
+        [HttpGet]
+        public IActionResult TicketForm()
+        {
+            MRTTicket mrt = new MRTTicket();
+            mrt.rdirect = false;
+
+
+            if (HttpContext.Session.GetInt32("UserID") == null)
+            {
+             
+                ViewBag.error = 3;
+                mrt.rdirect = true;
+                Console.WriteLine("wehh"+ mrt.rdirect);
+                TempData["error1"] = 1;
+                HttpContext.Session.SetInt32("error", 1);
+                return Redirect("Login");
+            }
+            else
+            {
+
+                Console.WriteLine("babi");
+                mrt.currentLocationIndex = -1;
+                mrt.destinationLocationIndex = -1;
+                mrt.TicketIndex = -1;
+
+                return View(mrt);
+            }
+       
+        }
+
+        [HttpPost]
+        public IActionResult TicketForm(MRTTicket mrt)
+        {
+            Console.WriteLine("val" + mrt.rdirect);
+            if (mrt.rdirect)
+            {
+                mrt.currentLocationIndex = -1;
+                mrt.destinationLocationIndex = -1;
+                mrt.TicketIndex = -1;
+                mrt.rdirect = false;
+                return View(mrt);
+            }
+            else
+            {
+                return View("ConfirmationTicket", mrt);
+            }
+            
+  
         }
 
 
+
     }
+
+
 }

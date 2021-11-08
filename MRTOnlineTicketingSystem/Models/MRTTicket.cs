@@ -2,10 +2,168 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace MRTOnlineTicketingSystem.Models {
     public class MRTTicket {
+
+        double TotalAdult, TotalSenior, TotalDisable, TotalStudent;
         
+        public bool rdirect { get; set; }
+        
+        
+        [Display(Name ="Date & Time")]
+        public DateTime PurchaseDateTime
+        {
+            get
+            {
+                return DateTime.Now;
+            }
+            set
+            {
+
+            }
+        }
+
+        [Display(Name = "Adult")]
+        public int Adult { get; set; }
+
+        [Display(Name = "Senior Citizen")]
+        public int SeniorCitizen { get; set; }
+
+        [Display(Name = "Disable")]
+        public int Disable { get; set; }
+
+        [Display(Name = "Student")]
+        public int Student { get; set; }
+
+        [Required]
+        [Display(Name = "From")]
+        public int currentLocationIndex { get; set; }
+
+        [Required]
+        [Display(Name = "To")]
+        public int destinationLocationIndex { get; set; }
+        [Required]
+        [Display(Name = "Ticket Type")]
+        public int TicketIndex { get; set; }
+
+  
+        public IDictionary<int, string> DictTicketType
+        {
+            get
+            {
+                return new Dictionary<int, string>()
+                {
+                    {1,"One Way"},
+                    {2,"Two Way" }
+                };
+            }
+            set
+            {
+
+            }
+        }
+        public IDictionary<int, string> DictStation
+        {
+            get
+            {
+                return new Dictionary<int, string>()
+                {
+
+                    {0, "Sungai Buloh"},
+                    {1, "Kampung Selamat"},
+                    {2, "Kwasa Damansara"},
+                    {3, "Kwasa Sentral"},
+                    {4, "Kota Damansara"},
+                    {5, "Surian"},
+                    {6, "Mutiara Damansara"},
+                    {7, "Bandar Utama"},
+                    {8, "Taman Tun Dr Ismail"},
+                    {9, "Phileo Damansara" },
+                    {10,"Pusat Bandar Raya Damansara"},
+                    {11,"Semantan" },
+                    {12,"Muzium Negara"},
+                    {13,"Pasar Seni"},
+                    {14,"Merdeka"},
+                    {15,"Bukit Bintang"},
+                    {16,"Tun Razak Exchange"},
+                    {17,"Cochrane"},
+                    {18,"Maluri"},
+                    {19,"Taman Pertama"},
+                    {20,"Taman Midah"},
+                    {21,"Taman Mutiara"},
+                    {22,"Taman Connaught"},
+                    {23,"Taman Suntex"},
+                    {24,"Sri Jaya" },
+                    {25,"Bandar Tun Hussein Onn" },
+                    {26, "Batu Sebelas Cheras" },
+                    {27,"Bukit Dukung"},
+                    {28,"Sungai Jernih"},
+                    {29,"Stadium Kajang" },
+                    {30,"Kajang"}
+
+                };
+            }
+
+            set { }
+        }
+
+        public double adultAmount
+        {
+            get
+            {
+
+                double TicketRates = rates[currentLocationIndex, destinationLocationIndex];
+                TotalAdult = Adult * TicketRates;
+                return TotalAdult;
+            }
+        }
+
+        public double SeniortAmount
+        {
+            get
+            {
+
+                double TicketRates = rates[currentLocationIndex, destinationLocationIndex];
+                double DiscountRates = TicketRates * 0.5;
+                TotalSenior = SeniorCitizen * DiscountRates;
+                return TotalSenior;
+            }
+        }
+
+        public double StudenttAmount
+        {
+            get
+            {
+
+                double TicketRates = rates[currentLocationIndex, destinationLocationIndex];
+                double DiscountRates = TicketRates * 0.4;
+                TotalStudent = Student * DiscountRates;
+                return TotalStudent;
+            }
+        }
+        public double DisableAmount
+        {
+            get
+            {
+
+                double TicketRates = rates[currentLocationIndex, destinationLocationIndex];
+                double DiscountRates = TicketRates * 0.6;
+                TotalDisable = Disable * DiscountRates;
+                return TotalDisable;
+            }
+        }
+        [Display(Name ="Total Amount")]
+        public string TotalAmount
+        {
+            get
+            {
+                double total = (TotalAdult + TotalSenior + TotalDisable + TotalStudent) * TicketIndex;
+                return "RM "+total;
+            }
+        }
+
         static double[,] rates = {
             {0.80,1.20,1.80,2.00,2.60,2.70,3.10,3.30,3.20,3.50,3.30,3.40,3.10,3.20,3.30,3.40,3.50,3.60,3.70,3.90,4.00,4.10,4.30,4.50,4.60,4.80,4.80,5.00,5.30,5.40,5.50 },
             {1.20,0.80,1.50,1.80,2.30,2.70,2.80,3.10,3.40,3.30,3.70,3.30,3.70,3.80,3.20,3.30,3.40,3.50,3.60,3.80,3.90,4.00,4.20,4.40,4.50,4.60,4.70,4.90,5.20,5.20,5.40 },
