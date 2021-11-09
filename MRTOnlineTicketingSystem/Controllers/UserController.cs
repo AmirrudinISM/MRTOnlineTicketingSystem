@@ -9,7 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Http;
 using System.Web;
-
+using MRTOnlineTicketingSystem.MailSettings;
 
 namespace MRTOnlineTicketingSystem.Controllers
 {
@@ -160,6 +160,8 @@ namespace MRTOnlineTicketingSystem.Controllers
                 if (UserResult.Password == user.Password)
                 {
                     HttpContext.Session.SetInt32("UserID", UserResult.Uid);
+                    HttpContext.Session.SetString("UserEmail", UserResult.Email);
+                    HttpContext.Session.SetString("UserName", UserResult.Name);
 
                     //check either before this user dari ticket form or dari login
                     if (HttpContext.Session.GetString("redirect") == "true")
@@ -248,9 +250,42 @@ namespace MRTOnlineTicketingSystem.Controllers
             
                     if (createPurchase.ExecuteNonQuery() > 0)
                     {
-                        Console.WriteLine("run3");
+                  
                         conn.Close();
-                        return View("SummaryTicket", mrt);
+
+                        var UserEmail = HttpContext.Session.GetString("UserEmail");
+                        var UserName= HttpContext.Session.GetString("UserName");
+                        var subject = "MRT Ticket receipt";
+                        var body = "Customer Name  :" + UserName + "<br>" +
+                                    "Date and time  :" + mrt.PurchaseDateTime + "<br>" +
+                                    "TICKET INFORMATION <br>" +
+                                    "From           :" + mrt.DictStation[mrt.currentLocationIndex] + "<br>" +
+                                    "To             :" + mrt.DictStation[mrt.destinationLocationIndex] + "<br>" +
+                                    "Trip type      :" + mrt.DictTicketType[mrt.TicketIndex] + "<br>" +
+                                    "TICKET QUANTITY <br>" +
+                                    "Adult ticket   :" + mrt.Adult + "<br>" +
+                                    "Senior Citizen :" + mrt.SeniorCitizen + "<br>" +
+                                    "Disable        :" + mrt.Disable + "<br>" +
+                                    "Student        :" + mrt.Student + "<br>" +
+                                    "<br>" +
+                                    "Total          :" + mrt.TotalAmount;
+
+                        var mail = new Mail(configuration);
+
+                        if (mail.Send(configuration["Gmail:Username"], UserEmail, subject, body))
+                        {
+                            ViewBag.Message = "Receipt successfully sent to " + UserEmail;
+                            return View("SummaryTicket", mrt);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sent mail failed"+ UserEmail);
+                        }
+
+
+
+
+                      
                     }
                 }
                 catch(Exception e)
