@@ -154,6 +154,7 @@ namespace MRTOnlineTicketingSystem.Controllers
             var UserResult = UserList.Where(x => x.Email == user.Email).FirstOrDefault();
 
 
+            Console.WriteLine("AFter login" + HttpContext.Session.GetString("redirect"));
             if (UserResult != null)
             {
                 if (UserResult.Password == user.Password)
@@ -199,7 +200,9 @@ namespace MRTOnlineTicketingSystem.Controllers
      
                 TempData["error1"] = 1;
                 HttpContext.Session.SetString("redirect", "true"); //set session utk bgthu yang user redirect ke login
-                return Redirect("Login");
+
+                Console.WriteLine("before login" + HttpContext.Session.GetString("redirect"));
+                return Redirect("Login"); 
             }
             else
             {
@@ -217,9 +220,54 @@ namespace MRTOnlineTicketingSystem.Controllers
         [HttpPost]
         public IActionResult TicketForm(MRTTicket mrt)
         {
+            Console.WriteLine("run");
+            if (ModelState.IsValid)
+            {
 
-                return View("SummaryTicket", mrt);
+                Console.WriteLine("run1");
+                SqlConnection conn = new SqlConnection(configuration.GetConnectionString("MRTConn"));
+                SqlCommand createPurchase = new SqlCommand("InsertPurchase", conn);
+                createPurchase.CommandType = CommandType.StoredProcedure;
 
+
+                createPurchase.Parameters.AddWithValue("@uid", HttpContext.Session.GetInt32("UserID"));
+                createPurchase.Parameters.AddWithValue("@purchasedate", mrt.PurchaseDateTime);
+                createPurchase.Parameters.AddWithValue("@from", mrt.currentLocationIndex);
+                createPurchase.Parameters.AddWithValue("@to", mrt.currentLocationIndex);
+                createPurchase.Parameters.AddWithValue("@adult", mrt.Adult);
+                createPurchase.Parameters.AddWithValue("@seniorcitizen", mrt.SeniorCitizen);
+                createPurchase.Parameters.AddWithValue("@disable", mrt.Disable);
+                createPurchase.Parameters.AddWithValue("@student", mrt.Student);
+                createPurchase.Parameters.AddWithValue("@totalamount", mrt.TotalAmount);
+
+
+                try
+                {
+                    Console.WriteLine("run2");
+                    conn.Open();
+            
+                    if (createPurchase.ExecuteNonQuery() > 0)
+                    {
+                        Console.WriteLine("run3");
+                        conn.Close();
+                        return View("SummaryTicket", mrt);
+                    }
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("e= "+e);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            else
+            {
+                return View(mrt);
+            }
+
+            return View(mrt);
         }
 
 
