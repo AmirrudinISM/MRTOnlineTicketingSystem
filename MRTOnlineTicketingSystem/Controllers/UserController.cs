@@ -283,8 +283,6 @@ namespace MRTOnlineTicketingSystem.Controllers
                         }
 
 
-
-
                       
                     }
                 }
