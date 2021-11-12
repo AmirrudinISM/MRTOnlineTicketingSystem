@@ -8,7 +8,9 @@ namespace MRTOnlineTicketingSystem.Models {
     public class MRTTicket {
 
         double TotalAdult, TotalSenior, TotalDisable, TotalStudent;   
-        
+        public int invoiceid { get; set; }
+        public int userid { get; set; }
+
         [Display(Name ="Date & Time")]
         public DateTime PurchaseDateTime
         {
@@ -36,11 +38,11 @@ namespace MRTOnlineTicketingSystem.Models {
 
         [Required]
         [Display(Name = "From")]
-        public int currentLocationIndex { get; set; }
+        public int CurrentLocationIndex { get; set; }
 
         [Required]
         [Display(Name = "To")]
-        public int destinationLocationIndex { get; set; }
+        public int DestinationLocationIndex { get; set; }
         [Required]
         [Display(Name = "Ticket Type")]
         public int TicketIndex { get; set; }
@@ -111,8 +113,9 @@ namespace MRTOnlineTicketingSystem.Models {
             get
             {
 
-                double TicketRates = rates[currentLocationIndex, destinationLocationIndex];
+                double TicketRates = rates[CurrentLocationIndex, DestinationLocationIndex];
                 TotalAdult = Adult * TicketRates;
+                TotalAdult = Math.Round(TotalAdult, 2);
                 return TotalAdult;
             }
         }
@@ -121,10 +124,12 @@ namespace MRTOnlineTicketingSystem.Models {
         {
             get
             {
-
-                double TicketRates = rates[currentLocationIndex, destinationLocationIndex];
+                double TicketRates = rates[CurrentLocationIndex, DestinationLocationIndex];
                 double DiscountRates = TicketRates * 0.5;
                 TotalSenior = SeniorCitizen * DiscountRates;
+                TotalSenior = Math.Round(TotalSenior, 2);
+
+
                 return TotalSenior;
             }
         }
@@ -134,9 +139,10 @@ namespace MRTOnlineTicketingSystem.Models {
             get
             {
 
-                double TicketRates = rates[currentLocationIndex, destinationLocationIndex];
+                double TicketRates = rates[CurrentLocationIndex, DestinationLocationIndex];
                 double DiscountRates = TicketRates * 0.4;
                 TotalStudent = Student * DiscountRates;
+                TotalStudent = Math.Round(TotalStudent,2);
                 return TotalStudent;
             }
         }
@@ -145,21 +151,32 @@ namespace MRTOnlineTicketingSystem.Models {
             get
             {
 
-                double TicketRates = rates[currentLocationIndex, destinationLocationIndex];
+                double TicketRates = rates[CurrentLocationIndex, DestinationLocationIndex];
                 double DiscountRates = TicketRates * 0.6;
                 TotalDisable = Disable * DiscountRates;
+                TotalDisable = Math.Round(TotalDisable, 2);
                 return TotalDisable;
             }
         }
+        public string _TotalAmount;
         [Display(Name ="Total Amount")]
         public string TotalAmount
         {
             get
             {
                 double total = (TotalAdult + TotalSenior + TotalDisable + TotalStudent) * TicketIndex;
+                total = Math.Round(total, 2);
                 return "RM "+total;
             }
+            set
+            {
+                _TotalAmount = value;
+            }
+          
         }
+
+  
+        
 
         static double[,] rates = {
             {0.80,1.20,1.80,2.00,2.60,2.70,3.10,3.30,3.20,3.50,3.30,3.40,3.10,3.20,3.30,3.40,3.50,3.60,3.70,3.90,4.00,4.10,4.30,4.50,4.60,4.80,4.80,5.00,5.30,5.40,5.50 },

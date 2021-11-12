@@ -20,6 +20,50 @@ namespace MRTOnlineTicketingSystem.Controllers
         {
             this.configuration = config;
         }
+        IList<MRTTicket> GetList()
+        {
+            IList<MRTTicket> DetailList = new List<MRTTicket>();
+            SqlConnection conn = new SqlConnection(configuration.GetConnectionString("MRTConn"));
+
+            string sql = "SELECT * FROM PurchaseOrder";
+
+            SqlCommand getList = new SqlCommand(sql, conn);
+
+            try
+            {
+
+                conn.Open();
+                SqlDataReader reader = getList.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    DetailList.Add(new MRTTicket()
+                    {
+                        invoiceid = reader.GetInt32(0),
+                        userid = reader.GetInt32(1),
+                        PurchaseDateTime = reader.GetDateTime(2),
+                        CurrentLocationIndex = reader.GetInt32(3),
+                        DestinationLocationIndex = reader.GetInt32(4),
+                        Adult = reader.GetInt32(5),
+                        SeniorCitizen = reader.GetInt32(6),
+                        Disable = reader.GetInt32(7),
+                        Student = reader.GetInt32(8),
+                        TotalAmount = reader.GetString(9)
+
+                    });
+                }
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return DetailList;
+        }
         [HttpGet]
         public IActionResult Register()
         {
@@ -172,7 +216,7 @@ namespace MRTOnlineTicketingSystem.Controllers
                     }
                     else
                     {
-                        return View("UserDashboard");
+                        return RedirectToAction("UserDashboard");
                     }
                   
                 }
@@ -210,8 +254,8 @@ namespace MRTOnlineTicketingSystem.Controllers
             {
 
          
-                mrt.currentLocationIndex = -1;
-                mrt.destinationLocationIndex = -1;
+                mrt.CurrentLocationIndex = -1;
+                mrt.DestinationLocationIndex = -1;
                 mrt.TicketIndex = -1;
 
                 return View(mrt);
@@ -222,7 +266,7 @@ namespace MRTOnlineTicketingSystem.Controllers
         [HttpPost]
         public IActionResult TicketForm(MRTTicket mrt)
         {
-            Console.WriteLine("run");
+            Console.WriteLine("run  from val="+ mrt.DictStation[mrt.CurrentLocationIndex]);
             if (ModelState.IsValid)
             {
 
@@ -234,8 +278,8 @@ namespace MRTOnlineTicketingSystem.Controllers
 
                 createPurchase.Parameters.AddWithValue("@uid", HttpContext.Session.GetInt32("UserID"));
                 createPurchase.Parameters.AddWithValue("@purchasedate", mrt.PurchaseDateTime);
-                createPurchase.Parameters.AddWithValue("@from", mrt.currentLocationIndex);
-                createPurchase.Parameters.AddWithValue("@to", mrt.currentLocationIndex);
+                createPurchase.Parameters.AddWithValue("@from", mrt.CurrentLocationIndex);
+                createPurchase.Parameters.AddWithValue("@to", mrt.DestinationLocationIndex);
                 createPurchase.Parameters.AddWithValue("@adult", mrt.Adult);
                 createPurchase.Parameters.AddWithValue("@seniorcitizen", mrt.SeniorCitizen);
                 createPurchase.Parameters.AddWithValue("@disable", mrt.Disable);
@@ -259,14 +303,15 @@ namespace MRTOnlineTicketingSystem.Controllers
                         var body = "Customer Name  :" + UserName + "<br>" +
                                     "Date and time  :" + mrt.PurchaseDateTime + "<br>" +
                                     "TICKET INFORMATION <br>" +
-                                    "From           :" + mrt.DictStation[mrt.currentLocationIndex] + "<br>" +
-                                    "To             :" + mrt.DictStation[mrt.destinationLocationIndex] + "<br>" +
+                                    "From           :" + mrt.DictStation[mrt.CurrentLocationIndex] + "<br>" +
+                                    "To             :" + mrt.DictStation[mrt.DestinationLocationIndex] + "<br>" +
                                     "Trip type      :" + mrt.DictTicketType[mrt.TicketIndex] + "<br>" +
                                     "TICKET QUANTITY <br>" +
-                                    "Adult ticket   :" + mrt.Adult + "<br>" +
+                                    "Adult          :" + mrt.Adult + "<br>" +
+                                    "Student        :" + mrt.Student + "<br>" +
                                     "Senior Citizen :" + mrt.SeniorCitizen + "<br>" +
                                     "Disable        :" + mrt.Disable + "<br>" +
-                                    "Student        :" + mrt.Student + "<br>" +
+                                  
                                     "<br>" +
                                     "Total          :" + mrt.TotalAmount;
 
@@ -303,7 +348,21 @@ namespace MRTOnlineTicketingSystem.Controllers
             return View(mrt);
         }
 
+        [HttpGet]
+        public IActionResult UserDashboard()
+        {
+            IList<MRTTicket> DetailList = GetList();
+            var result = DetailList.Where(x => x.userid == HttpContext.Session.GetInt32("UserID"));
 
+            return View(result);
+        }
+
+        public IActionResult Details(int id)
+        {
+            IList<MRTTicket> DetailList = GetList();
+            var result = DetailList.Where(x => x.invoiceid == id);
+            return View(result); 
+        }
 
     }
 

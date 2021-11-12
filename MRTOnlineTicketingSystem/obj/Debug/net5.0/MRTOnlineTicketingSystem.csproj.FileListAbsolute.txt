@@ -51,3 +51,4 @@ C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSy
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\MRTOnlineTicketingSystem.pdb
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\MRTOnlineTicketingSystem.genruntimeconfig.cache
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\MRTOnlineTicketingSystem.csproj.AssemblyReference.cache
+C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\User\Details.cshtml.g.cs

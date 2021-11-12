@@ -12,15 +12,15 @@
     {
 
         <p class="col-md-4">
-            <label>@Html.DisplayNameFor(x => x.currentLocationIndex) </label>
-            @Html.DropDownListFor(x => x.currentLocationIndex, new SelectList(Model.DictStation, "Key", "Value"), "Select Station", new { @class = "form-control" })
-            @Html.ValidationMessageFor(x => x.currentLocationIndex, "", new { @class = "text-danger" })
+            <label>@Html.DisplayNameFor(x => x.CurrentLocationIndex) </label>
+            @Html.DropDownListFor(x => x.CurrentLocationIndex, new SelectList(Model.DictStation, "Key", "Value"), "Select Station", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.CurrentLocationIndex, "", new { @class = "text-danger" })
 
         </p>
         <p class="col-md-4">
-            <label>@Html.DisplayNameFor(x => x.destinationLocationIndex) </label>
-            @Html.DropDownListFor(x => x.destinationLocationIndex, new SelectList(Model.DictStation, "Key", "Value"), "Select Station", new { @class = "form-control" })
-            @Html.ValidationMessageFor(x => x.destinationLocationIndex, "", new { @class = "text-danger" })
+            <label>@Html.DisplayNameFor(x => x.DestinationLocationIndex) </label>
+            @Html.DropDownListFor(x => x.DestinationLocationIndex, new SelectList(Model.DictStation, "Key", "Value"), "Select Station", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.DestinationLocationIndex, "", new { @class = "text-danger" })
 
         </p>
 

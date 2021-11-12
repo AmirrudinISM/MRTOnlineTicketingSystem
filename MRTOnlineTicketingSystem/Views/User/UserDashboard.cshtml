@@ -1,4 +1,6 @@
-﻿<p>User Dashboard a</p>
+﻿@model IEnumerable<MRTOnlineTicketingSystem.Models.MRTTicket>
+
+<p>User Dashboard a</p>
 
 @if (ViewBag.error != null)
 {
@@ -6,5 +8,30 @@
 }
 
 <p><button type="button">@Html.ActionLink("Book Now!", "TicketForm")</button></p>
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>@Html.DisplayNameFor(x => x.PurchaseDateTime)</th>
+        <th>@Html.DisplayNameFor(x => x.CurrentLocationIndex)</th>
+        <th>@Html.DisplayNameFor(x => x.DestinationLocationIndex)</th>
+        <th>@Html.DisplayNameFor(x => x.TotalAmount)</th>
+        <th>Action</th>
+    </tr>
+    @{ int i = 1;}
+    @foreach (var x in Model)
+    {
+        <tr>
+            <td>@i</td>
+            @{
+                i++;
+            }
+            <td>@Html.DisplayFor(y => x.PurchaseDateTime)</td>
+            <td>@Html.DisplayFor(y => x.DictStation[x.CurrentLocationIndex])</td>
+            <td>@Html.DisplayFor(y => x.DictStation[x.DestinationLocationIndex])</td>
+            <td>@Html.DisplayFor(y => x._TotalAmount)</td>
+            <td>@Html.ActionLink("Details","Details",new {id = x.invoiceid })</td>
 
-<h1>display semua booking based on user </h1>
+        </tr>
+    }
+</table>
+
