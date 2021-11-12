@@ -207,13 +207,13 @@ namespace MRTOnlineTicketingSystem.Controllers
                     HttpContext.Session.SetInt32("UserID", UserResult.Uid);
                     HttpContext.Session.SetString("UserEmail", UserResult.Email);
                     HttpContext.Session.SetString("UserName", UserResult.Name);
-
+                    //aku nk dia redirect ke ticket form tu
                     //check either before this user dari ticket form or dari login
                     if (HttpContext.Session.GetString("redirect") == "true")
                     {
                         //kalau dari ticket form dia akan redirect ke ticket form semula untuk continue booking process
                         HttpContext.Session.Remove("error");
-                        return View("SummaryTicket");
+                        return RedirectToAction("TicketForm");
                     }
                     else
                     {
@@ -353,6 +353,8 @@ namespace MRTOnlineTicketingSystem.Controllers
         [HttpGet]
         public IActionResult UserDashboard()
         {
+            Console.WriteLine("hehehe"+HttpContext.Session.GetString("UserName"));
+            ViewBag.Name = HttpContext.Session.GetString("UserName");
             IList<MRTTicket> DetailList = GetList();
             Console.WriteLine(HttpContext.Session.GetInt32("UserID"));
             var result = DetailList.Where(x => x.Userid == HttpContext.Session.GetInt32("UserID"));
