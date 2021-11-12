@@ -8,8 +8,8 @@ namespace MRTOnlineTicketingSystem.Models {
     public class MRTTicket {
 
         double TotalAdult, TotalSenior, TotalDisable, TotalStudent;   
-        public int invoiceid { get; set; }
-        public int userid { get; set; }
+        public int Invoiceid { get; set; }
+        public int Userid { get; set; }
 
         [Display(Name ="Date & Time")]
         public DateTime PurchaseDateTime

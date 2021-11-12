@@ -39,8 +39,8 @@ namespace MRTOnlineTicketingSystem.Controllers
                 {
                     DetailList.Add(new MRTTicket()
                     {
-                        invoiceid = reader.GetInt32(0),
-                        userid = reader.GetInt32(1),
+                        Invoiceid = reader.GetInt32(0),
+                        Userid = reader.GetInt32(1),
                         PurchaseDateTime = reader.GetDateTime(2),
                         CurrentLocationIndex = reader.GetInt32(3),
                         DestinationLocationIndex = reader.GetInt32(4),
@@ -280,6 +280,7 @@ namespace MRTOnlineTicketingSystem.Controllers
                 createPurchase.Parameters.AddWithValue("@purchasedate", mrt.PurchaseDateTime);
                 createPurchase.Parameters.AddWithValue("@from", mrt.CurrentLocationIndex);
                 createPurchase.Parameters.AddWithValue("@to", mrt.DestinationLocationIndex);
+                createPurchase.Parameters.AddWithValue("@ticketway", mrt.TicketIndex);
                 createPurchase.Parameters.AddWithValue("@adult", mrt.Adult);
                 createPurchase.Parameters.AddWithValue("@seniorcitizen", mrt.SeniorCitizen);
                 createPurchase.Parameters.AddWithValue("@disable", mrt.Disable);
@@ -352,7 +353,7 @@ namespace MRTOnlineTicketingSystem.Controllers
         public IActionResult UserDashboard()
         {
             IList<MRTTicket> DetailList = GetList();
-            var result = DetailList.Where(x => x.userid == HttpContext.Session.GetInt32("UserID"));
+            var result = DetailList.Where(x => x.Userid == HttpContext.Session.GetInt32("UserID"));
 
             return View(result);
         }
@@ -360,9 +361,11 @@ namespace MRTOnlineTicketingSystem.Controllers
         public IActionResult Details(int id)
         {
             IList<MRTTicket> DetailList = GetList();
-            var result = DetailList.Where(x => x.invoiceid == id);
+            var result = DetailList.First(x => x.Invoiceid == id);
             return View(result); 
         }
+
+   
 
     }
 
