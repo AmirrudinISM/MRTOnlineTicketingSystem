@@ -44,11 +44,12 @@ namespace MRTOnlineTicketingSystem.Controllers
                         PurchaseDateTime = reader.GetDateTime(2),
                         CurrentLocationIndex = reader.GetInt32(3),
                         DestinationLocationIndex = reader.GetInt32(4),
-                        Adult = reader.GetInt32(5),
-                        SeniorCitizen = reader.GetInt32(6),
-                        Disable = reader.GetInt32(7),
-                        Student = reader.GetInt32(8),
-                        TotalAmount = reader.GetString(9)
+                        TicketIndex= reader.GetInt32(5),
+                        Adult = reader.GetInt32(6),
+                        SeniorCitizen = reader.GetInt32(7),
+                        Disable = reader.GetInt32(8),
+                        Student = reader.GetInt32(9),
+                        TotalAmount = reader.GetString(10)
 
                     });
                 }
@@ -353,6 +354,7 @@ namespace MRTOnlineTicketingSystem.Controllers
         public IActionResult UserDashboard()
         {
             IList<MRTTicket> DetailList = GetList();
+            Console.WriteLine(HttpContext.Session.GetInt32("UserID"));
             var result = DetailList.Where(x => x.Userid == HttpContext.Session.GetInt32("UserID"));
 
             return View(result);
