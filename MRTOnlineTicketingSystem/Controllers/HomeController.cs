@@ -20,11 +20,6 @@ namespace MRTOnlineTicketingSystem.Controllers {
         }
 
 
-        public IActionResult AdminHome()
-        {
-            return View();
-        }
-
         public IActionResult UserHome()
         {
             return View();

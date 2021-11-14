@@ -1,4 +1,4 @@
-﻿@model MRTOnlineTicketingSystem.Models.User
+﻿@model MRTOnlineTicketingSystem.Models.Admin
 <head>
     <title>Login</title>
 </head>
@@ -22,14 +22,7 @@
                 <p>User not found!</p>
             </div>
         }
-        
-        @if (TempData["error1"] != null)
-        {
-       
-            <div class="alert alert-danger">
-                <p>Please login first before booking a ticket</p>
-            </div>
-        }
+
 
         <div class=" row">
             <p class="col-md-6">
@@ -48,8 +41,8 @@
         </div>
 
 
-        <p> <button type="submit" value="Login" class="btn-success btn-md" >Login </button>&nbsp;<button class="btn-warning btn-md">@Html.ActionLink("Register", "Register")</button></p>
-       
+        <p> <button type="submit" value="Login" class="btn-success btn-md">Login </button>&nbsp;<button class="btn-warning btn-md">@Html.ActionLink("Register", "Register")</button></p>
+
         <p></p>
     }
 </body>

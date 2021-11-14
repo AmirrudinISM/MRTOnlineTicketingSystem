@@ -9,8 +9,14 @@ namespace MRTOnlineTicketingSystem.Models {
 
         double TotalAdult, TotalSenior, TotalDisable, TotalStudent;   
         public int Invoiceid { get; set; }
-        public int Userid { get; set; }
 
+        [Display(Name = "Name")]
+        public string CustomerName { get; set; }
+
+        [Display(Name = "Email")]
+        public string CustomerEmail { get; set; }
+        public int Userid { get; set; }
+        public DateTime _PurchaseDateTime;
         [Display(Name ="Date & Time")]
         public DateTime PurchaseDateTime
         {
@@ -20,7 +26,7 @@ namespace MRTOnlineTicketingSystem.Models {
             }
             set
             {
-
+                _PurchaseDateTime = value;
             }
         }
 
@@ -211,6 +217,6 @@ namespace MRTOnlineTicketingSystem.Models {
             {5.40,5.20,5.00,4.90,4.60,4.50,4.30,4.20,4.00,3.90,3.60,3.50,3.20,3.80,3.70,3.60,3.40,3.30,3.70,3.40,3.30,3.40,3.10,2.70,2.70,2.30,2.20,1.80,1.10,0.80,1.20 },
             {5.50,5.40,5.10,5.00,4.80,4.60,4.40,4.30,4.10,4.00,3.70,3.60,3.30,3.20,3.20,3.80,3.60,3.40,3.30,3.60,3.50,3.20,3.40,3.00,2.70,2.70,2.50,2.10,1.40,1.20,0.80 }
         };
-
+   
     }
 }

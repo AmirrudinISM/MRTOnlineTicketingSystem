@@ -4,26 +4,23 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#">Admin Dashboard <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                   
-                    <a class="nav-link" href="TicketForm">Buy Ticket</a>
-                </li>
+            
 
             </ul>
-          
-       
-                @using (Html.BeginForm("SearchIndex", "User", FormMethod.Get, new { @class="form-inline my-6 my-lg-0"}))
-                {
-                    <label></label>
-                    @Html.TextBox("SearchString", null, new { @class = "datepicker  form-control", @placeholder = "Search ticket by date" })
 
-                    <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="submit"/>
-        
-                }
-           
-            
+
+            @using (Html.BeginForm("SearchIndex", "User", FormMethod.Get, new { @class = "form-inline my-6 my-lg-0" }))
+            {
+                <label></label>
+                @Html.TextBox("SearchString", null, new { @class = "datepicker  form-control", @placeholder = "Search ticket by date" })
+
+                <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="submit" />
+
+            }
+
+
         </div>
     </nav>
     @if (ViewBag.Name != null)
@@ -37,11 +34,13 @@
         <p>eror la wei</p>
     }
 
-    <p></p>
+<p>@ViewBag.count_KampungSelamat</p>
     <table class="table">
         <tr>
             <th>#</th>
             <th>@Html.DisplayNameFor(x => x.PurchaseDateTime)</th>
+            <th>@Html.DisplayNameFor(x => x.CustomerName)</th>
+            <th>@Html.DisplayNameFor(x => x.CustomerEmail)</th>
             <th>@Html.DisplayNameFor(x => x.CurrentLocationIndex)</th>
             <th>@Html.DisplayNameFor(x => x.DestinationLocationIndex)</th>
             <th>@Html.DisplayNameFor(x => x.TotalAmount)</th>
@@ -50,18 +49,20 @@
         @{ int i = 1;}
         @foreach (var x in Model)
         {
-            <tr>
-                <td>@i</td>
-                @{
-                    i++;
-                }
-                <td>@Html.DisplayFor(y => x._PurchaseDateTime)</td>
-                <td>@Html.DisplayFor(y => x.DictStation[x.CurrentLocationIndex])</td>
-                <td>@Html.DisplayFor(y => x.DictStation[x.DestinationLocationIndex])</td>
-                <td>@Html.DisplayFor(y => x._TotalAmount)</td>
-                <td>@Html.ActionLink("Details", "Details", new { id = x.Invoiceid })</td>
+    <tr>
+        <td>@i</td>
+        @{
+            i++;
+        }
+        <td>@Html.DisplayFor(y => x._PurchaseDateTime)</td>
+        <td>@Html.DisplayFor(y => x.CustomerName)</td>
+        <td>@Html.DisplayFor(y => x.CustomerEmail)</td>
+        <td>@Html.DisplayFor(y => x.DictStation[x.CurrentLocationIndex])</td>
+        <td>@Html.DisplayFor(y => x.DictStation[x.DestinationLocationIndex])</td>
+        <td>@Html.DisplayFor(y => x._TotalAmount)</td>
+        <td>@Html.ActionLink("Details", "Details", new { id = x.Invoiceid })</td>
 
-            </tr>
+    </tr>
         }
     </table>
 </body>

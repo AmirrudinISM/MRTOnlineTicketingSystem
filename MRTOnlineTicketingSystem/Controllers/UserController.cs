@@ -10,9 +10,15 @@ using System.Data.SqlClient;
 using Microsoft.AspNetCore.Http;
 using System.Web;
 using MRTOnlineTicketingSystem.MailSettings;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace MRTOnlineTicketingSystem.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IConfiguration configuration;
@@ -22,6 +28,7 @@ namespace MRTOnlineTicketingSystem.Controllers
         }
         IList<MRTTicket> GetList()
         {
+     
             IList<MRTTicket> DetailList = new List<MRTTicket>();
             SqlConnection conn = new SqlConnection(configuration.GetConnectionString("MRTConn"));
 
@@ -65,11 +72,15 @@ namespace MRTOnlineTicketingSystem.Controllers
 
             return DetailList;
         }
+
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Register(User user)
         {
@@ -129,11 +140,16 @@ namespace MRTOnlineTicketingSystem.Controllers
                     createUser.Parameters.AddWithValue("@upass", user.Password);
                     createUser.Parameters.AddWithValue("@utype", "2");
                     createUser.Parameters.AddWithValue("@icnumber", user.ICNumber);
-
+                    createUser.Parameters.Add("@uid", SqlDbType.Int).Direction = ParameterDirection.Output;
+                   
                     try
                     {
                         conn.Open();
                         createUser.ExecuteNonQuery();
+                        string id = createUser.Parameters["@uid"].Value.ToString();
+                   
+
+                        Console.WriteLine("id" + id);
                     }
                     catch
                     {
@@ -143,8 +159,7 @@ namespace MRTOnlineTicketingSystem.Controllers
                     {
                         conn.Close();
                     }
-
-                   //try dapatkan return login id
+                    
                     return View("Login");
                 }
 
@@ -155,15 +170,16 @@ namespace MRTOnlineTicketingSystem.Controllers
             }
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login(User user)
+        public async Task<IActionResult> Login(User user)
         {
             Console.WriteLine("masuk:");
             IList<User> UserList = new List<User>();
@@ -198,21 +214,40 @@ namespace MRTOnlineTicketingSystem.Controllers
 
             var UserResult = UserList.Where(x => x.Email == user.Email).FirstOrDefault();
 
-
-            Console.WriteLine("AFter login" + HttpContext.Session.GetString("redirect"));
+                //ok dah kot aku try sat
+                Console.WriteLine("AFter login" + HttpContext.Session.GetString("redirect"));
             if (UserResult != null)
             {
                 if (UserResult.Password == user.Password)
                 {
+                    var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, UserResult.Name, ClaimValueTypes.String, "adminportal"),
+                    new Claim("UserEmail", UserResult.Email),
+                    new Claim("UserID", UserResult.Uid.ToString()),
+                    new Claim("UserName", UserResult.Name),
+                    new Claim("UserEmail", UserResult.Email)
+                };
+
+                    var userIdentity = new ClaimsIdentity(claims, "SecureLogin");
+                    var userPrincipal = new ClaimsPrincipal(userIdentity);
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal,
+                    new AuthenticationProperties
+                    {
+                        ExpiresUtc = DateTime.UtcNow.AddMinutes(60),
+                        IsPersistent = true,
+                        AllowRefresh = true
+                    });
+
                     HttpContext.Session.SetInt32("UserID", UserResult.Uid);
                     HttpContext.Session.SetString("UserEmail", UserResult.Email);
                     HttpContext.Session.SetString("UserName", UserResult.Name);
-                    //aku nk dia redirect ke ticket form tu
-                    //check either before this user dari ticket form or dari login
+               
+                    Console.WriteLine("redirect val ="+ HttpContext.Session.GetString("redirect"));
                     if (HttpContext.Session.GetString("redirect") == "true")
                     {
-                        //kalau dari ticket form dia akan redirect ke ticket form semula untuk continue booking process
-                        HttpContext.Session.Remove("error");
+
                         return RedirectToAction("TicketForm");
                     }
                     else
@@ -237,6 +272,12 @@ namespace MRTOnlineTicketingSystem.Controllers
 
             }
         }
+      
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Login");
+        }
         [HttpGet]
         public IActionResult TicketForm()
         {
@@ -246,10 +287,10 @@ namespace MRTOnlineTicketingSystem.Controllers
             {
      
                 TempData["error1"] = 1;
-                HttpContext.Session.SetString("redirect", "true"); //set session utk bgthu yang user redirect ke login
+                HttpContext.Session.SetString("redirect", "true"); 
 
-                Console.WriteLine("before login" + HttpContext.Session.GetString("redirect"));
-                return Redirect("Login"); 
+                Console.WriteLine("before login= " + HttpContext.Session.GetString("redirect"));
+                return RedirectToAction("Login"); 
             }
             else
             {
@@ -349,11 +390,11 @@ namespace MRTOnlineTicketingSystem.Controllers
 
             return View(mrt);
         }
-
+        
         [HttpGet]
         public IActionResult UserDashboard()
         {
-            Console.WriteLine("hehehe"+HttpContext.Session.GetString("UserName"));
+            
             ViewBag.Name = HttpContext.Session.GetString("UserName");
             IList<MRTTicket> DetailList = GetList();
             Console.WriteLine(HttpContext.Session.GetInt32("UserID"));
@@ -369,7 +410,16 @@ namespace MRTOnlineTicketingSystem.Controllers
             return View(result); 
         }
 
-   
+        public IActionResult SearchIndex(string searchString)
+        {
+            IList<MRTTicket> DetailList = GetList();
+            DateTime date = Convert.ToDateTime(searchString);
+            Console.WriteLine("date va;=" +date);
+            var result = DetailList.Where(x => x.PurchaseDateTime >=date && x.Userid == HttpContext.Session.GetInt32("UserID")) ;
+
+            Console.WriteLine("ini result" + result);
+            return View("UserDashboard", result);
+        }
 
     }
 
