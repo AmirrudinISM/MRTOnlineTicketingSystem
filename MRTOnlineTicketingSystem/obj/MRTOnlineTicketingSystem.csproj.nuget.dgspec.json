@@ -44,6 +44,10 @@
               "target": "Package",
               "version": "[4.8.3, )"
             },
+            "X.PagedList.Mvc.Core": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
             "jQuery.UI.Combined": {
               "target": "Package",
               "version": "[1.12.1, )"

@@ -53,3 +53,9 @@ C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSy
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\User\Details.cshtml.g.cs
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\Admin\AdminDashboard.cshtml.g.cs
 C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\Admin\AdminLogin.cshtml.g.cs
+C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\bin\Debug\net5.0\JetBrains.Annotations.dll
+C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\bin\Debug\net5.0\X.PagedList.dll
+C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\bin\Debug\net5.0\X.PagedList.Mvc.Core.dll
+C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\MRTOnlineTicketingSystem.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\Admin\Visitor.cshtml.g.cs
+C:\Users\Arthuria\Documents\GitHub\MRTOnlineTicketingSystem\MRTOnlineTicketingSystem\obj\Debug\net5.0\Razor\Views\Admin\Details.cshtml.g.cs

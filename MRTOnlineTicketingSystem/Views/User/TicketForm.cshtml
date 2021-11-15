@@ -7,6 +7,12 @@
 <body>
 
     <h1>Book ticket for your journey now</h1>
+    @if (ViewBag.choose != null)
+    {
+        <div class="alert alert-danger">
+            <p>Please select ticket quantity atleast 1!</p>
+        </div>
+    }
 
     @using (Html.BeginForm())
     {
@@ -52,7 +58,12 @@
         </p>
 
 
-        <p> <input type="submit" value="Buy" class="btn-success btn-md" /></p>
+        <p> <input type="submit" value="Buy" class="btn-success btn-md" /> &nbsp; @Html.ActionLink("Cancel", "UserDashboard")</p>
+
+
+        <p>
+          
+        </p>
     }
 </body>
 @section Scripts {

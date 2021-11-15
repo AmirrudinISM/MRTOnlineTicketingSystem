@@ -1,0 +1,64 @@
+﻿@model MRTOnlineTicketingSystem.Models.MRTTicket
+<head>
+    <title>Summary</title>
+</head>
+<body>
+    <h1>Ticket Summary</h1>
+    <br />
+    <h3>Station</h3>
+    <p>
+        <label>@Html.DisplayNameFor(x => x.PurchaseDateTime): </label>
+        @Html.DisplayFor(x => x.PurchaseDateTime)
+    </p>
+    <div class="row">
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.CurrentLocationIndex) :</label>
+            @Html.DisplayFor(x => x.DictStation[Model.CurrentLocationIndex])
+        </p>
+    </div>
+
+    <div class="row">
+
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.DestinationLocationIndex) :</label>
+            @Html.DisplayFor(x => x.DictStation[Model.DestinationLocationIndex])
+        </p>
+    </div>
+    <div class="row">
+
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.TicketIndex) :</label>
+            @Html.DisplayFor(x => x.DictTicketType[Model.TicketIndex])
+        </p>
+    </div>
+    <h3>Ticket Quantity</h3>
+    <div class="row">
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.Adult) :</label>
+            @Html.DisplayFor(x => x.Adult)
+        </p>
+    </div>
+    <div class="row">
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.SeniorCitizen) :</label>
+            @Html.DisplayFor(x => x.SeniorCitizen)
+        </p>
+    </div>
+    <div class="row">
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.Disable) :</label>
+            @Html.DisplayFor(x => x.Disable)
+        </p>
+    </div>
+    <h3>Price</h3>
+    <div class="row">
+        <p class="col-md-4">
+            <label>@Html.DisplayNameFor(x => x.TotalAmount) :</label>
+            @Html.DisplayFor(x => x._TotalAmount)
+        </p>
+    </div>
+
+    <p>
+        @Html.ActionLink("Back to User Dashboard", "AdminDashboard")
+    </p>
+</body>

@@ -1,0 +1,548 @@
+﻿
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+                <a class="nav-link" href="AdminDashboard">Admin Dashboard <span class="sr-only">(current)</span></a>
+            </li>
+            <li>
+                <a class="nav-link active" href="#">Visitor</a>
+
+            </li>
+
+        </ul>
+
+        @if (ViewBag.UserEmail != null)
+        {
+            @using (Html.BeginForm("Logout", "Admin", FormMethod.Get, new { @class = "form-inline my-6 my-lg-0" }))
+            {
+
+
+                <input type="submit" class="btn btn-outline-danger my-2 my-sm-0" value="Logout" />
+
+            }
+        }
+
+    </div>
+</nav>
+<section class="page-section" id="services">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Station Visitor</h2>
+
+        </div>
+        <div class="row text-center">
+            <div class="col-md-2 card">
+                <h4 class="my-1">Sungai Buloh</h4>
+                @if (@ViewBag.SgBuloh == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.SgBuloh</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Kampung Selamat</h4>
+                @if (@ViewBag.KampungSelamat == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">
+                        @ViewBag.KampungSelamat
+                    </p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Kwasa Damansara</h4>
+                @if (@ViewBag.KwasaDamansara == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.KwasaDamansara</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">KwasaSentral</h4>
+                @if (@ViewBag.KwasaSentral == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.KwasaSentral</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Kota Damansara</h4>
+                @if (@ViewBag.KotaDamansara == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.KotaDamansara</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Surian</h4>
+
+                @if (@ViewBag.Surian == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.Surian</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Mutiara Damansara</h4>
+                @if (@ViewBag.MutiaraDamansara == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.MutiaraDamansara</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Bandar Utama</h4>
+                @if (@ViewBag.BandarUtama == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.BandarUtama</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Taman Tun Dr Ismail</h4>
+                @if (@ViewBag.TamanTunDrIsmail == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.TamanTunDrIsmail</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Phileo Damansara</h4>
+                @if (@ViewBag.PhileoDamansara == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.PhileoDamansara</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Pusat Bandar Raya Damansara</h4>
+                @if (@ViewBag.PusatBandarRayaDamansara == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.PusatBandarRayaDamansara</p>
+
+                }
+
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Semantan</h4>
+                @if (@ViewBag.Semantan == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.Semantan</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Muzium Negara</h4>
+                @if (@ViewBag.MuziumNegara == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.MuziumNegara</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Pasar Seni</h4>
+                @if (@ViewBag.PasarSeni == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.PasarSeni</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Merdekah</h4>
+                @if (@ViewBag.Merdeka == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.Merdeka</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Bukit Bintang</h4>
+                @if (@ViewBag.BukitBintang == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.BukitBintang</p>
+
+                }
+
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Tun Razak Exchange</h4>
+                @if (@ViewBag.TunRazakExchange == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.TunRazakExchange</p>
+
+                }
+
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Cochrane</h4>
+                @if (@ViewBag.Cochrane == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.Cochrane</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Maluri</h4>
+                @if (@ViewBag.Maluri == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.Maluri</p>
+
+                }
+
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Taman Pertama</h4>
+                @if (@ViewBag.TamanPertama == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.TamanPertama</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Taman Midah</h4>
+                @if (@ViewBag.TamanMidah == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.TamanMidah</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Taman Mutiara</h4>
+                @if (@ViewBag.TamanMutiara == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.TamanMutiara</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Taman Connaught</h4>
+                @if (@ViewBag.TamanConnaught == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.TamanConnaught</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Taman Suntex</h4>
+                @if (@ViewBag.TamanSuntex == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.TamanSuntex</p>
+
+                }
+
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Sri Jaya</h4>
+                @if (@ViewBag.SriJaya == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.SriJaya</p>
+
+                }
+
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Bandar Tun Hussein Onn</h4>
+                @if (@ViewBag.BandarTunHusseinOnn == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.BandarTunHusseinOnn</p>
+
+                }
+
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Batu Sebelas Cheras</h4>
+                @if (@ViewBag.BatuSebelasCheras == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.BatuSebelasCheras</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Bukit Dukung</h4>
+
+                @if (@ViewBag.BukitDukung == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.BukitDukung</p>
+
+                }
+
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Sungai Jernih</h4>
+                @if (@ViewBag.SungaiJernih == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.SungaiJernih</p>
+
+                }
+
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Stadium Kajang</h4>
+                @if (@ViewBag.StadiumKajang == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.StadiumKajang</p>
+
+                }
+
+            </div>
+            <div class="col-md-2 card">
+                <h4 class="my-1">Kajang</h4>
+                @if (@ViewBag.Kajang == null)
+                {
+                    <p class="text-muted">
+                        0
+                    </p>
+                }
+                else
+                {
+
+                    <p class="text-muted">@ViewBag.Kajang</p>
+
+                }
+
+
+            </div>
+
+        </div>
+    </div>
+</section>

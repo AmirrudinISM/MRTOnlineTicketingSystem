@@ -1,28 +1,12 @@
 ﻿@model IEnumerable<MRTOnlineTicketingSystem.Models.MRTTicket>
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+
+
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Admin Dashboard <span class="sr-only">(current)</span></a>
-                </li>
-            
 
-            </ul>
-
-
-            @using (Html.BeginForm("SearchIndex", "User", FormMethod.Get, new { @class = "form-inline my-6 my-lg-0" }))
-            {
-                <label></label>
-                @Html.TextBox("SearchString", null, new { @class = "datepicker  form-control", @placeholder = "Search ticket by date" })
-
-                <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="submit" />
-
-            }
-
-
-        </div>
-    </nav>
     @if (ViewBag.Name != null)
     {
         <p>Welcome back, @ViewBag.Name !</p>
@@ -34,8 +18,52 @@
         <p>eror la wei</p>
     }
 
-<p>@ViewBag.count_KampungSelamat</p>
-    <table class="table">
+
+    <br />
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Admin Dashboard <span class="sr-only">(current)</span></a>
+                </li>
+                <li>
+                    <a class="nav-link" href="Visitor">Visitor</a>
+
+                </li>
+
+            </ul>
+
+
+            @using (Html.BeginForm("AdminDashboard", "Admin", FormMethod.Get, new { @class = "form-inline my-6 my-lg-0" }))
+            {
+                <label></label>
+                @Html.TextBox("SearchString", null, new { @class = "  form-control", @placeholder = "Search Email or Name" })
+
+                <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="submit" />
+
+            }
+            &nbsp;
+            <a class="btn btn-outline-primary my-2 my-sm-0" href="AdminDashboard">Clear</a>
+            &nbsp;
+            @if (ViewBag.UserEmail != null)
+            {
+                @using (Html.BeginForm("Logout", "Admin", FormMethod.Get, new { @class = "form-inline my-6 my-lg-0" }))
+                {
+
+
+                    <input type="submit" class="btn btn-outline-danger my-2 my-sm-0" value="Logout" />
+
+                }
+            }
+
+        </div>
+    </nav>
+    <header>
+        <img src="~/Images/Banner.jpg" style=" margin-left: auto; margin-right: auto; padding-bottom:30px; width: 100%; height:20%" />
+    </header>
+    <br />
+    <table class="table" id="table_id">
         <tr>
             <th>#</th>
             <th>@Html.DisplayNameFor(x => x.PurchaseDateTime)</th>
@@ -49,34 +77,25 @@
         @{ int i = 1;}
         @foreach (var x in Model)
         {
-    <tr>
-        <td>@i</td>
-        @{
-            i++;
-        }
-        <td>@Html.DisplayFor(y => x._PurchaseDateTime)</td>
-        <td>@Html.DisplayFor(y => x.CustomerName)</td>
-        <td>@Html.DisplayFor(y => x.CustomerEmail)</td>
-        <td>@Html.DisplayFor(y => x.DictStation[x.CurrentLocationIndex])</td>
-        <td>@Html.DisplayFor(y => x.DictStation[x.DestinationLocationIndex])</td>
-        <td>@Html.DisplayFor(y => x._TotalAmount)</td>
-        <td>@Html.ActionLink("Details", "Details", new { id = x.Invoiceid })</td>
+            <tr>
+                <td>@i</td>
+                @{
+                    i++;
+                }
+                <td>@Html.DisplayFor(y => x._PurchaseDateTime)</td>
+                <td>@Html.DisplayFor(y => x.CustomerName)</td>
+                <td>@Html.DisplayFor(y => x.CustomerEmail)</td>
+                <td>@Html.DisplayFor(y => x.DictStation[x.CurrentLocationIndex])</td>
+                <td>@Html.DisplayFor(y => x.DictStation[x.DestinationLocationIndex])</td>
+                <td>@Html.DisplayFor(y => x._TotalAmount)</td>
+                <td>@Html.ActionLink("Details", "Details", new { id = x.Invoiceid })</td>
 
-    </tr>
+            </tr>
         }
     </table>
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("AdminDashboard", new { Page = page }),
+    new PagedListRenderOptions
+        {
+        PageClasses = new[] { "page-link" }
+    })
 </body>
-@section Scripts {
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <script type="text/javascript">
-
-        $(".datepicker").datepicker({
-            dateFormat: "dd/mm/yy",
-        });
-    </script>
-}

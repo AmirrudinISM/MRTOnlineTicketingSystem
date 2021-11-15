@@ -1,30 +1,42 @@
 ﻿@model IEnumerable<MRTOnlineTicketingSystem.Models.MRTTicket>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="collapse navbar-collapse">
+      
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                   
+
                     <a class="nav-link" href="TicketForm">Buy Ticket</a>
                 </li>
 
             </ul>
-          
-       
-                @using (Html.BeginForm("SearchIndex", "User", FormMethod.Get, new { @class="form-inline my-6 my-lg-0"}))
-                {
-                    <label></label>
-                    @Html.TextBox("SearchString", null, new { @class = "datepicker  form-control", @placeholder = "Search ticket by date" })
 
-                    <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="submit"/>
-        
+
+            @using (Html.BeginForm("SearchIndex", "User", FormMethod.Get, new { @class = "form-inline my-6 my-lg-0" }))
+            {
+                <label></label>
+                @Html.TextBox("SearchString", null, new { @class = "datepicker  form-control", @placeholder = "Search ticket by date" })
+
+                <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="submit" />
+
+            }
+            &nbsp;
+            <a class="btn btn-outline-primary my-2 my-sm-0" href="UserDashboard">Clear</a>
+
+            @if (ViewBag.Name != null)
+            {
+                @using (Html.BeginForm("Logout", "User", FormMethod.Get, new { @class = "form-inline my-6 my-lg-0" }))
+                {
+                   
+
+                    <input type="submit" class="btn btn-outline-danger my-2 my-sm-0" value="Logout" />
+
                 }
-           
-            
-        </div>
+            }
+
+        
     </nav>
     @if (ViewBag.Name != null)
     {

@@ -311,77 +311,89 @@ namespace MRTOnlineTicketingSystem.Controllers
             Console.WriteLine("run  from val="+ mrt.DictStation[mrt.CurrentLocationIndex]);
             if (ModelState.IsValid)
             {
-
-                Console.WriteLine("run1");
-                SqlConnection conn = new SqlConnection(configuration.GetConnectionString("MRTConn"));
-                SqlCommand createPurchase = new SqlCommand("InsertPurchase", conn);
-                createPurchase.CommandType = CommandType.StoredProcedure;
-
-
-                createPurchase.Parameters.AddWithValue("@uid", HttpContext.Session.GetInt32("UserID"));
-                createPurchase.Parameters.AddWithValue("@purchasedate", mrt.PurchaseDateTime);
-                createPurchase.Parameters.AddWithValue("@from", mrt.CurrentLocationIndex);
-                createPurchase.Parameters.AddWithValue("@to", mrt.DestinationLocationIndex);
-                createPurchase.Parameters.AddWithValue("@ticketway", mrt.TicketIndex);
-                createPurchase.Parameters.AddWithValue("@adult", mrt.Adult);
-                createPurchase.Parameters.AddWithValue("@seniorcitizen", mrt.SeniorCitizen);
-                createPurchase.Parameters.AddWithValue("@disable", mrt.Disable);
-                createPurchase.Parameters.AddWithValue("@student", mrt.Student);
-                createPurchase.Parameters.AddWithValue("@totalamount", mrt.TotalAmount);
-
-
-                try
+                
+               
+               if(mrt.TotalAmount!="RM 0")
                 {
-                    Console.WriteLine("run2");
-                    conn.Open();
-            
-                    if (createPurchase.ExecuteNonQuery() > 0)
+                    Console.WriteLine("run1");
+                    SqlConnection conn = new SqlConnection(configuration.GetConnectionString("MRTConn"));
+                    SqlCommand createPurchase = new SqlCommand("InsertPurchase", conn);
+                    createPurchase.CommandType = CommandType.StoredProcedure;
+
+
+                    createPurchase.Parameters.AddWithValue("@uid", HttpContext.Session.GetInt32("UserID"));
+                    createPurchase.Parameters.AddWithValue("@purchasedate", mrt.PurchaseDateTime);
+                    createPurchase.Parameters.AddWithValue("@from", mrt.CurrentLocationIndex);
+                    createPurchase.Parameters.AddWithValue("@to", mrt.DestinationLocationIndex);
+                    createPurchase.Parameters.AddWithValue("@ticketway", mrt.TicketIndex);
+                    createPurchase.Parameters.AddWithValue("@adult", mrt.Adult);
+                    createPurchase.Parameters.AddWithValue("@seniorcitizen", mrt.SeniorCitizen);
+                    createPurchase.Parameters.AddWithValue("@disable", mrt.Disable);
+                    createPurchase.Parameters.AddWithValue("@student", mrt.Student);
+                    createPurchase.Parameters.AddWithValue("@totalamount", mrt.TotalAmount);
+
+
+                    try
                     {
-                  
+                        Console.WriteLine("run2");
+                        conn.Open();
+
+                        if (createPurchase.ExecuteNonQuery() > 0)
+                        {
+
+                            conn.Close();
+
+                            var UserEmail = HttpContext.Session.GetString("UserEmail");
+                            var UserName = HttpContext.Session.GetString("UserName");
+                            var subject = "MRT Ticket receipt";
+                            var body = "Customer Name  :" + UserName + "<br>" +
+                                        "Date and time  :" + mrt.PurchaseDateTime + "<br>" +
+                                        "TICKET INFORMATION <br>" +
+                                        "From           :" + mrt.DictStation[mrt.CurrentLocationIndex] + "<br>" +
+                                        "To             :" + mrt.DictStation[mrt.DestinationLocationIndex] + "<br>" +
+                                        "Trip type      :" + mrt.DictTicketType[mrt.TicketIndex] + "<br>" +
+                                        "TICKET QUANTITY <br>" +
+                                        "Adult          :" + mrt.Adult + "<br>" +
+                                        "Student        :" + mrt.Student + "<br>" +
+                                        "Senior Citizen :" + mrt.SeniorCitizen + "<br>" +
+                                        "Disable        :" + mrt.Disable + "<br>" +
+
+                                        "<br>" +
+                                        "Total          :" + mrt.TotalAmount;
+
+                            var mail = new Mail(configuration);
+
+                            if (mail.Send(configuration["Gmail:Username"], UserEmail, subject, body))
+                            {
+                                ViewBag.Message = "Receipt successfully sent to " + UserEmail;
+                                return View("SummaryTicket", mrt);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Sent mail failed" + UserEmail);
+                            }
+
+
+
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("e= " + e);
+                    }
+                    finally
+                    {
                         conn.Close();
-
-                        var UserEmail = HttpContext.Session.GetString("UserEmail");
-                        var UserName= HttpContext.Session.GetString("UserName");
-                        var subject = "MRT Ticket receipt";
-                        var body = "Customer Name  :" + UserName + "<br>" +
-                                    "Date and time  :" + mrt.PurchaseDateTime + "<br>" +
-                                    "TICKET INFORMATION <br>" +
-                                    "From           :" + mrt.DictStation[mrt.CurrentLocationIndex] + "<br>" +
-                                    "To             :" + mrt.DictStation[mrt.DestinationLocationIndex] + "<br>" +
-                                    "Trip type      :" + mrt.DictTicketType[mrt.TicketIndex] + "<br>" +
-                                    "TICKET QUANTITY <br>" +
-                                    "Adult          :" + mrt.Adult + "<br>" +
-                                    "Student        :" + mrt.Student + "<br>" +
-                                    "Senior Citizen :" + mrt.SeniorCitizen + "<br>" +
-                                    "Disable        :" + mrt.Disable + "<br>" +
-                                  
-                                    "<br>" +
-                                    "Total          :" + mrt.TotalAmount;
-
-                        var mail = new Mail(configuration);
-
-                        if (mail.Send(configuration["Gmail:Username"], UserEmail, subject, body))
-                        {
-                            ViewBag.Message = "Receipt successfully sent to " + UserEmail;
-                            return View("SummaryTicket", mrt);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Sent mail failed"+ UserEmail);
-                        }
-
-
-                      
                     }
                 }
-                catch(Exception e)
+                else
                 {
-                    Console.WriteLine("e= "+e);
+                    {
+                        ViewBag.Choose = "no ticket";
+                        return View(mrt);
+                    }
                 }
-                finally
-                {
-                    conn.Close();
-                }
+       
             }
             else
             {
@@ -398,7 +410,7 @@ namespace MRTOnlineTicketingSystem.Controllers
             ViewBag.Name = HttpContext.Session.GetString("UserName");
             IList<MRTTicket> DetailList = GetList();
             Console.WriteLine(HttpContext.Session.GetInt32("UserID"));
-            var result = DetailList.Where(x => x.Userid == HttpContext.Session.GetInt32("UserID"));
+            var result = DetailList.Where(x => x.Userid == HttpContext.Session.GetInt32("UserID")).OrderByDescending(x=>x._PurchaseDateTime);
 
             return View(result);
         }
@@ -415,9 +427,12 @@ namespace MRTOnlineTicketingSystem.Controllers
             IList<MRTTicket> DetailList = GetList();
             DateTime date = Convert.ToDateTime(searchString);
             Console.WriteLine("date va;=" +date);
-            var result = DetailList.Where(x => x.PurchaseDateTime >=date && x.Userid == HttpContext.Session.GetInt32("UserID")) ;
+            var result = DetailList.Where(x => x._PurchaseDateTime.Date ==date.Date && x.Userid == HttpContext.Session.GetInt32("UserID")).OrderByDescending(x=>x._PurchaseDateTime) ;
+            foreach(var x in result)
+            {
+                Console.WriteLine("ini result" + x._PurchaseDateTime.Date);
+            }
 
-            Console.WriteLine("ini result" + result);
             return View("UserDashboard", result);
         }
 
