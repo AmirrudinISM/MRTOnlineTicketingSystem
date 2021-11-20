@@ -4,6 +4,11 @@
 </head>
 <body>
     <h1>Ticket Summary</h1>
+
+    @if (ViewBag.Message != null)
+    {
+        <p>@ViewBag.Message</p>
+    }
     <br />
     <h3>Station</h3>
     <p>

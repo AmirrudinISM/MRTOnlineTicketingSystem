@@ -42,14 +42,14 @@ namespace MRTOnlineTicketingSystem.Models {
         [Display(Name = "Student")]
         public int Student { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = " Please Select Station")]
         [Display(Name = "From")]
         public int CurrentLocationIndex { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Select Station")]
         [Display(Name = "To")]
         public int DestinationLocationIndex { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please choose your ticket type")]
         [Display(Name = "Ticket Type")]
         public int TicketIndex { get; set; }
 
@@ -181,10 +181,19 @@ namespace MRTOnlineTicketingSystem.Models {
           
         }
 
+        public string CheckRate
+        {
+            get
+            {
+                double rate = rates[CurrentLocationIndex, DestinationLocationIndex];
+                string TicketRates = "RM " + rate;
+                return TicketRates;
+            }
+        }
   
         
 
-        static double[,] rates = {
+        public static double[,] rates = {
             {0.80,1.20,1.80,2.00,2.60,2.70,3.10,3.30,3.20,3.50,3.30,3.40,3.10,3.20,3.30,3.40,3.50,3.60,3.70,3.90,4.00,4.10,4.30,4.50,4.60,4.80,4.80,5.00,5.30,5.40,5.50 },
             {1.20,0.80,1.50,1.80,2.30,2.70,2.80,3.10,3.40,3.30,3.70,3.30,3.70,3.80,3.20,3.30,3.40,3.50,3.60,3.80,3.90,4.00,4.20,4.40,4.50,4.60,4.70,4.90,5.20,5.20,5.40 },
             {1.80,1.50,0.80,1.10,1.80,2.10,2.60,2.60,3.00,3.20,3.30,3.50,3.40,3.50,3.60,3.70,3.20,3.30,3.40,3.50,3.60,3.80,3.90,4.10,4.30,4.40,4.50,4.60,4.90,5.00,5.10 },

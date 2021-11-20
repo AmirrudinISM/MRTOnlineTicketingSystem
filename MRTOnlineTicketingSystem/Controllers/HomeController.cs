@@ -19,10 +19,42 @@ namespace MRTOnlineTicketingSystem.Controllers {
             return View();
         }
 
-
+        [HttpGet]
         public IActionResult UserHome()
         {
-            return View();
+            MRTTicket mrt = new MRTTicket();
+            mrt.CurrentLocationIndex = -1;
+            mrt.DestinationLocationIndex = -1;
+            mrt.TicketIndex = -1;
+
+            return View(mrt);
+          
+        }
+
+        [HttpPost]
+
+        public IActionResult UserHome(MRTTicket mrt)
+        {
+
+            if (ModelState.IsValid)
+            {
+                Console.WriteLine(mrt.CheckRate);
+
+                ViewBag.Rate = mrt.CheckRate;
+                return View(mrt);
+
+            }
+            else
+            {
+
+                ViewBag.ErrorMsg = "Please Choose your station";
+                return View(mrt);
+            }
+
+              
+
+       
+
         }
         public IActionResult Privacy() {
             return View();
