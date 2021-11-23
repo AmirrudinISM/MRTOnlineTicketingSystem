@@ -147,8 +147,11 @@ namespace MRTOnlineTicketingSystem.Controllers
                         conn.Open();
                         createUser.ExecuteNonQuery();
                         string id = createUser.Parameters["@uid"].Value.ToString();
-                   
 
+                        if (id != null)
+                        {
+                            return RedirectToAction("Login");
+                        }
                         Console.WriteLine("id" + id);
                     }
                     catch
